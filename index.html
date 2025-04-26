@@ -1,0 +1,136 @@
+<!Doctype html>
+<head>
+    <title>Tools Website</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .page-title {
+            color: #4CAF50;
+            text-align: center;
+            margin: 40px 0;
+            font-size: 2.5em;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 60px;
+            padding: 20px;
+        }
+
+        .flex-container > div {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex: 0 1 300px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #4CAF50;
+            transition: all 0.3s ease;
+        }
+
+        .flex-container > div:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+
+        .flex-container h1 {
+            font-size: 1.5em;
+            color: #4CAF50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .flex-container p {
+            color: #666;
+            text-align: center;
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #4CAF50;
+            color: #666;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+        @media (max-width: 768px) {
+            .flex-container > div {
+                flex: 0 1 300px;
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flex-container > div {
+                flex: 0 1 300px;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="page-title">TOOLS WEBSITE</h1>
+    <div class="flex-container">
+        <div>
+            <a href="ru.html">
+                <h1>Random Username Generator</h1>
+                <p>Generate secure and unique usernames instantly</p>
+            </a>
+        </div>
+        <div>
+            <a href="convert.html">
+                <h1>Unit Converter</h1>
+                <p>Convert Anything, Anytime!</p>
+            </a>
+        </div>
+        <div>
+            <h1>BMI Calculator</h1>
+            <p>Quick BMI Calculator for a Healthier You</p>
+        </div>
+        <div>
+            <h1>Word Counter</h1>
+            <p>Know Your Word Count Instantly</p>
+        </div>
+        <div>
+            <h1>Text Case Converter</h1>
+            <p>Uppercase, Lowercase, Title Case - Instantly</p>
+        </div>
+        <div>
+            <h1>Compound Interest Calculator</h1>
+            <p>Grow Your Savings Smartly</p>
+        </div>
+    </div>
+    <footer>
+        <p>© 2025 Tools Website. All rights reserved</p>
+        <p>Created with ❤️ by Group 12</p>
+    </footer>
+</body>
+</html>
