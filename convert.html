@@ -2,31 +2,72 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Unit Converter</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
       padding: 20px;
-      text-align: center;
-      background: #f0f0f0;
+      background-color: #f5f5f5;
     }
+
     .container {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      display: inline-block;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    select, input, button {
-      margin: 10px;
+
+    h1, h2 {
+      color: #4CAF50;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+      font-weight: bold;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
       padding: 10px;
-      width: 200px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
     }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
     #result {
       margin-top: 20px;
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #333;
+      padding: 15px;
+      background-color: #f8f8f8;
+      border-radius: 4px;
+      text-align: center;
+      font-size: 18px;
     }
   </style>
 </head>
@@ -35,30 +76,44 @@
   <div class="container">
     <h1>Unit Converter</h1>
 
-    <select id="category" onchange="updateUnits()">
-      <option value="">Select Category</option>
-      <option value="length">Length</option>
-      <option value="weight">Weight</option>
-      <option value="temperature">Temperature</option>
-      <option value="volume">Volume</option>
-      <option value="area">Area</option>
-      <option value="speed">Speed</option>
-      <option value="time">Time</option>
-    </select><br>
+    <div class="input-group">
+      <label for="category">Select Category:</label>
+      <select id="category" onchange="updateUnits()" required>
+        <option value="">-- Select Category --</option>
+        <option value="length">Length</option>
+        <option value="weight">Weight</option>
+        <option value="temperature">Temperature</option>
+        <option value="volume">Volume</option>
+        <option value="area">Area</option>
+        <option value="speed">Speed</option>
+        <option value="time">Time</option>
+      </select>
+    </div>
 
-    <input type="number" id="value" placeholder="Enter value"><br>
+    <div class="input-group">
+      <label for="value">Enter Value:</label>
+      <input type="number" id="value" placeholder="Enter value here" required>
+    </div>
 
-    <select id="fromUnit"></select><br>
+    <div class="input-group">
+      <label for="fromUnit">From Unit:</label>
+      <select id="fromUnit" required></select>
+    </div>
 
-    <select id="toUnit"></select><br>
+    <div class="input-group">
+      <label for="toUnit">To Unit:</label>
+      <select id="toUnit" required></select>
+    </div>
 
     <button onclick="convert()">Convert</button>
 
-    <div id="result"></div>
+    <h2>Result:</h2>
+    <div id="result">
+      <p>Please fill out the fields and click Convert.</p>
+    </div>
   </div>
 
   <script>
-    // Your uploaded JavaScript code pasted here:
     function lengthConverter(value, fromUnit, toUnit) {
       const units = {
         meter: 1,
@@ -185,33 +240,25 @@
       const fromUnit = document.getElementById("fromUnit").value;
       const toUnit = document.getElementById("toUnit").value;
 
-      let result;
-
       if (isNaN(value)) {
-        document.getElementById("result").innerText = "Please enter a valid number.";
+        document.getElementById("result").innerHTML = "<p style='color:red;'>Please enter a valid number.</p>";
         return;
       }
 
-      if (category === 'length') {
-        result = lengthConverter(value, fromUnit, toUnit);
-      } else if (category === 'weight') {
-        result = weightConverter(value, fromUnit, toUnit);
-      } else if (category === 'temperature') {
-        result = temperatureConverter(value, fromUnit, toUnit);
-      } else if (category === 'volume') {
-        result = volumeConverter(value, fromUnit, toUnit);
-      } else if (category === 'area') {
-        result = areaConverter(value, fromUnit, toUnit);
-      } else if (category === 'speed') {
-        result = speedConverter(value, fromUnit, toUnit);
-      } else if (category === 'time') {
-        result = timeConverter(value, fromUnit, toUnit);
-      } else {
+      let result;
+      if (category === 'length') result = lengthConverter(value, fromUnit, toUnit);
+      else if (category === 'weight') result = weightConverter(value, fromUnit, toUnit);
+      else if (category === 'temperature') result = temperatureConverter(value, fromUnit, toUnit);
+      else if (category === 'volume') result = volumeConverter(value, fromUnit, toUnit);
+      else if (category === 'area') result = areaConverter(value, fromUnit, toUnit);
+      else if (category === 'speed') result = speedConverter(value, fromUnit, toUnit);
+      else if (category === 'time') result = timeConverter(value, fromUnit, toUnit);
+      else {
         document.getElementById("result").innerText = "Invalid category selected!";
         return;
       }
 
-      document.getElementById("result").innerText = `${value} ${fromUnit.replace(/_/g, " ")} = ${result.toFixed(4)} ${toUnit.replace(/_/g, " ")}`;
+      document.getElementById("result").innerHTML = `<p>${value} ${fromUnit.replace(/_/g, " ")} = <strong>${result.toFixed(4)}</strong> ${toUnit.replace(/_/g, " ")}</p>`;
     }
   </script>
 
