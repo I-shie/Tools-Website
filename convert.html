@@ -1,161 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Unit Converter</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-    }
-    input, select, button {
-      margin: 10px 0;
-      padding: 8px;
-      width: 100%;
-    }
-    .result {
-      margin-top: 20px;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Unit Converter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Unit Converter</h1>
 
-  <h1>Unit Converter</h1>
+        <div class="input-group">
+            <label for="category">Select Category:</label>
+            <select id="category" onchange="updateUnits()">
+                <option value="">Select Category</option>
+                <option value="length">Length</option>
+                <option value="weight">Weight</option>
+                <option value="temperature">Temperature</option>
+                <option value="volume">Volume</option>
+                <option value="area">Area</option>
+                <option value="speed">Speed</option>
+                <option value="time">Time</option>
+            </select>
+        </div>
 
-  <label for="category">Category:</label>
-  <select id="category">
-    <option value="length">Length</option>
-    <option value="weight">Weight</option>
-    <option value="temperature">Temperature</option>
-    <option value="volume">Volume</option>
-    <option value="area">Area</option>
-    <option value="speed">Speed</option>
-    <option value="time">Time</option>
-  </select>
+        <div class="input-group">
+            <label for="value">Enter Value:</label>
+            <input type="number" id="value" placeholder="Enter value">
+        </div>
 
-  <label for="value">Value:</label>
-  <input type="number" id="value" placeholder="Enter value" />
+        <div class="input-group">
+            <label for="fromUnit">From Unit:</label>
+            <select id="fromUnit"></select>
+        </div>
 
-  <label for="fromUnit">From Unit:</label>
-  <input type="text" id="fromUnit" placeholder="Enter from unit (e.g., meter)" />
+        <div class="input-group">
+            <label for="toUnit">To Unit:</label>
+            <select id="toUnit"></select>
+        </div>
 
-  <label for="toUnit">To Unit:</label>
-  <input type="text" id="toUnit" placeholder="Enter to unit (e.g., kilometer)" />
+        <button onclick="convert()">Convert</button>
 
-  <button onclick="convert()">Convert</button>
+        <div id="result"></div>
+    </div>
 
-  <div class="result" id="result"></div>
 
-  <script>
-    function lengthConverter(value, fromUnit, toUnit) {
-      const units = {
-        meter: 1,
-        kilometer: 1000,
-        centimeter: 0.01,
-        millimeter: 0.001,
-        mile: 1609.34,
-        yard: 0.9144,
-        foot: 0.3048,
-        inch: 0.0254
-      };
-      return value * units[fromUnit] / units[toUnit];
-    }
-
-    function weightConverter(value, fromUnit, toUnit) {
-      const units = {
-        kilogram: 1,
-        gram: 0.001,
-        pound: 0.453592,
-        ounce: 0.0283495
-      };
-      return value * units[fromUnit] / units[toUnit];
-    }
-
-    function temperatureConverter(value, fromUnit, toUnit) {
-      if (fromUnit === toUnit) return value;
-
-      if (fromUnit === 'celsius') {
-        if (toUnit === 'fahrenheit') return (value * 9/5) + 32;
-        if (toUnit === 'kelvin') return value + 273.15;
+    <script>
+      function lengthConverter(value, fromUnit, toUnit) {
+        const units = {
+          meter: 1,
+          kilometer: 1000,
+          centimeter: 0.01,
+          millimeter: 0.001,
+          mile: 1609.34,
+          yard: 0.9144,
+          foot: 0.3048,
+          inch: 0.0254
+        };
+        return value * units[fromUnit] / units[toUnit];
       }
-      if (fromUnit === 'fahrenheit') {
-        if (toUnit === 'celsius') return (value - 32) * 5/9;
-        if (toUnit === 'kelvin') return (value - 32) * 5/9 + 273.15;
+  
+      function weightConverter(value, fromUnit, toUnit) {
+        const units = {
+          kilogram: 1,
+          gram: 0.001,
+          pound: 0.453592,
+          ounce: 0.0283495
+        };
+        return value * units[fromUnit] / units[toUnit];
       }
-      if (fromUnit === 'kelvin') {
-        if (toUnit === 'celsius') return value - 273.15;
-        if (toUnit === 'fahrenheit') return (value - 273.15) * 9/5 + 32;
+  
+      function temperatureConverter(value, fromUnit, toUnit) {
+        if (fromUnit === toUnit) return value;
+        if (fromUnit === 'celsius') {
+          if (toUnit === 'fahrenheit') return (value * 9/5) + 32;
+          if (toUnit === 'kelvin') return value + 273.15;
+        }
+        if (fromUnit === 'fahrenheit') {
+          if (toUnit === 'celsius') return (value - 32) * 5/9;
+          if (toUnit === 'kelvin') return (value - 32) * 5/9 + 273.15;
+        }
+        if (fromUnit === 'kelvin') {
+          if (toUnit === 'celsius') return value - 273.15;
+          if (toUnit === 'fahrenheit') return (value - 273.15) * 9/5 + 32;
+        }
       }
-    }
-
-    function volumeConverter(value, fromUnit, toUnit) {
-      const units = {
-        liter: 1,
-        milliliter: 0.001,
-        cubic_meter: 1000,
-        gallon: 3.78541,
-        quart: 0.946353,
-        pint: 0.473176,
-        cup: 0.24,
-        fluid_ounce: 0.0295735
-      };
-      return value * units[fromUnit] / units[toUnit];
-    }
-
-    function areaConverter(value, fromUnit, toUnit) {
-      const units = {
-        square_meter: 1,
-        square_kilometer: 1e6,
-        square_centimeter: 0.0001,
-        square_millimeter: 0.000001,
-        square_mile: 2.59e6,
-        square_yard: 0.836127,
-        square_foot: 0.092903,
-        square_inch: 0.00064516,
-        hectare: 10000,
-        acre: 4046.86
-      };
-      return value * units[fromUnit] / units[toUnit];
-    }
-
-    function speedConverter(value, fromUnit, toUnit) {
-      const units = {
-        meter_per_second: 1,
-        kilometer_per_hour: 0.277778,
-        mile_per_hour: 0.44704,
-        foot_per_second: 0.3048,
-        knot: 0.514444
-      };
-      return value * units[fromUnit] / units[toUnit];
-    }
-
-    function timeConverter(value, fromUnit, toUnit) {
-      const units = {
-        second: 1,
-        minute: 60,
-        hour: 3600,
-        day: 86400,
-        week: 604800
-      };
-      return value * units[fromUnit] / units[toUnit];
-    }
-
-    function convert() {
-      const category = document.getElementById('category').value;
-      const value = parseFloat(document.getElementById('value').value);
-      const fromUnit = document.getElementById('fromUnit').value.trim().toLowerCase();
-      const toUnit = document.getElementById('toUnit').value.trim().toLowerCase();
-      const resultDiv = document.getElementById('result');
-
-      if (isNaN(value)) {
-        resultDiv.textContent = "Please enter a valid number.";
-        return;
+  
+      function volumeConverter(value, fromUnit, toUnit) {
+        const units = {
+          liter: 1,
+          milliliter: 0.001,
+          cubic_meter: 1000,
+          gallon: 3.78541,
+          quart: 0.946353,
+          pint: 0.473176,
+          cup: 0.24,
+          fluid_ounce: 0.0295735
+        };
+        return value * units[fromUnit] / units[toUnit];
       }
-
-      let result;
-
-      try {
+  
+      function areaConverter(value, fromUnit, toUnit) {
+        const units = {
+          square_meter: 1,
+          square_kilometer: 1e6,
+          square_centimeter: 0.0001,
+          square_millimeter: 0.000001,
+          square_mile: 2.59e6,
+          square_yard: 0.836127,
+          square_foot: 0.092903,
+          square_inch: 0.00064516,
+          hectare: 10000,
+          acre: 4046.86
+        };
+        return value * units[fromUnit] / units[toUnit];
+      }
+  
+      function speedConverter(value, fromUnit, toUnit) {
+        const units = {
+          meter_per_second: 1,
+          kilometer_per_hour: 0.277778,
+          mile_per_hour: 0.44704,
+          foot_per_second: 0.3048,
+          knot: 0.514444
+        };
+        return value * units[fromUnit] / units[toUnit];
+      }
+  
+      function timeConverter(value, fromUnit, toUnit) {
+        const units = {
+          second: 1,
+          minute: 60,
+          hour: 3600,
+          day: 86400,
+          week: 604800
+        };
+        return value * units[fromUnit] / units[toUnit];
+      }
+  
+      const unitsList = {
+        length: ["meter", "kilometer", "centimeter", "millimeter", "mile", "yard", "foot", "inch"],
+        weight: ["kilogram", "gram", "pound", "ounce"],
+        temperature: ["celsius", "fahrenheit", "kelvin"],
+        volume: ["liter", "milliliter", "cubic_meter", "gallon", "quart", "pint", "cup", "fluid_ounce"],
+        area: ["square_meter", "square_kilometer", "square_centimeter", "square_millimeter", "square_mile", "square_yard", "square_foot", "square_inch", "hectare", "acre"],
+        speed: ["meter_per_second", "kilometer_per_hour", "mile_per_hour", "foot_per_second", "knot"],
+        time: ["second", "minute", "hour", "day", "week"]
+      };
+  
+      function updateUnits() {
+        const category = document.getElementById("category").value;
+        const fromSelect = document.getElementById("fromUnit");
+        const toSelect = document.getElementById("toUnit");
+  
+        fromSelect.innerHTML = "";
+        toSelect.innerHTML = "";
+  
+        if (unitsList[category]) {
+          unitsList[category].forEach(unit => {
+            const option1 = new Option(unit.replace(/_/g, " "), unit);
+            const option2 = new Option(unit.replace(/_/g, " "), unit);
+            fromSelect.add(option1);
+            toSelect.add(option2);
+          });
+        }
+      }
+  
+      function convert() {
+        const category = document.getElementById("category").value;
+        const value = parseFloat(document.getElementById("value").value);
+        const fromUnit = document.getElementById("fromUnit").value;
+        const toUnit = document.getElementById("toUnit").value;
+  
+        let result;
+  
+        if (isNaN(value)) {
+          document.getElementById("result").innerText = "Please enter a valid number.";
+          return;
+        }
+  
         if (category === 'length') {
           result = lengthConverter(value, fromUnit, toUnit);
         } else if (category === 'weight') {
@@ -171,20 +259,13 @@
         } else if (category === 'time') {
           result = timeConverter(value, fromUnit, toUnit);
         } else {
-          resultDiv.textContent = "Invalid category selected.";
+          document.getElementById("result").innerText = "Invalid category selected!";
           return;
         }
-
-        if (result === undefined) {
-          resultDiv.textContent = "Invalid unit conversion.";
-        } else {
-          resultDiv.textContent = `${value} ${fromUnit} is equal to ${result.toFixed(4)} ${toUnit}`;
-        }
-      } catch (error) {
-        resultDiv.textContent = "An error occurred during conversion.";
+  
+        document.getElementById("result").innerText = `${value} ${fromUnit.replace(/_/g, " ")} = ${result.toFixed(4)} ${toUnit.replace(/_/g, " ")}`;
       }
-    }
-  </script>
-
+    </script>
 </body>
 </html>
+
