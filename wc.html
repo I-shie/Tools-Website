@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Word Counter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+            height: 200px;
+            font-size: 16px;
+        }
+
+        #countResult {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Word Counter</h1>
+        
+        <textarea id="wordInput" placeholder="Start typing..." oninput="updateCounts()"></textarea>
+        
+        <div id="countResult">
+            Word Count: 0 | Character Count (no spaces): 0 | WPM: 0
+        </div>
+        
+        <button onclick="copyText()">Copy Text</button>
+    </div>
+
+    <script>
+      let startTime = Date.now();
+      
+      function updateCounts() {
+        const text = document.getElementById('wordInput').value;
+        const trimmedText = text.trim();
+      
+        const wordCount = trimmedText === "" ? 0 : trimmedText.split(/\s+/).length;
+        const charCount = text.replace(/\s/g, '').length;
+      
+        const currentTime = Date.now();
+        const minutes = (currentTime - startTime) / 60000;
+        const wpm = minutes > 0 ? Math.round(wordCount / minutes) : 0;
+      
+        document.getElementById('countResult').innerText =
+          "Word Count: " + wordCount +
+          " | Character Count (no spaces): " + charCount +
+          " | WPM: " + wpm;
+      }
+      
+      function copyText() {
+        const textarea = document.getElementById('wordInput');
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+      
+        document.execCommand("copy");
+        alert("Text copied to clipboard!");
+      }
+      </script>
+</body>
+</html>
